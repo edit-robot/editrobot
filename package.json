@@ -1,20 +1,37 @@
 {
-  "name": "editrobot",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "body-parser": "~1.10.2",
-    "cookie-parser": "~1.3.3",
-    "debug": "~2.1.1",
-    "ejs": "~2.2.3",
-    "express": "~4.11.1",
-    "morgan": "~1.5.1",
-    "serve-favicon": "~2.2.0",
-	"express-partials": "~0.1.0"
-  },
-  "language": "chinese",
-  "db_path": "db"
+    "name": "editrobot",
+    "version": "0.0.1",
+    "scripts": {
+        "start": "node ./bin/www",
+        "install": "node-gyp rebuild"
+    },
+    "dependencies": {
+        "body-parser": "~1.10.2",
+        "cookie-parser": "~1.3.3",
+        "debug": "~2.1.1",
+        "ejs": "~2.2.3",
+        "express": "~4.11.1",
+        "morgan": "~1.5.1",
+        "serve-favicon": "~2.2.0",
+        "express-partials": "~0.1.0"
+    },
+    "language": "chinese",
+    "db_path": "db",
+    "gypfile": true,
+    "description": "##About",
+    "main": "app.js",
+    "devDependencies": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/edit-robot/editrobot.git"
+    },
+    "keywords": [
+        "editrobot"
+    ],
+    "author": "leoyin <yinkehao@me.com>(http://github.com/leoyin)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/edit-robot/editrobot/issues"
+    },
+    "homepage": "https://github.com/edit-robot/editrobot"
 }

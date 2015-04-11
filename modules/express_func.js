@@ -2,14 +2,12 @@ var express = require('express');
 var file = require('./file.js');
 var fs = require('fs');
 var os = require('os');
-var net = require('./net.js');
 var time = require('./time.js');
 var http = require('http');
-var querystring = require('querystring');
 var nosql = require('./nosql.js');
+var config = require("../lib/config")();
 ////////////////////////////////////////////////////////////////////////////////////
 //该处为C++模块
-var nodecpp = require("../build/Release/nodecpp");
 ////////////////////////////////////////////////////////////////////////////////////
 global.project_name = "";
 global.project_root_path = "";
@@ -18,7 +16,8 @@ global.session = "temp_session";
 global.db_path = "db";
 global.clean_session = 0;
 ////////////////////////////////////////////////////////////////////////////////////
-var Interface = function(){};
+var Interface = function () {
+};
 
 //主机信息
 Interface.prototype.host_info = function () {
@@ -40,41 +39,41 @@ Interface.prototype.host_info = function () {
 };
 
 //登录信息管理器
-Interface.prototype.login_handle_manage = function (req, res, callback){
-	console.log("login_handle_manage");
+Interface.prototype.login_handle_manage = function (req, res, callback) {
+    console.log("login_handle_manage");
     var project_root_path = global.project_root_path;
     file.travel_dir(project_root_path + "/" + global.session, function (pathname) {
-        console.log("pathname:",pathname);
+        console.log("pathname:", pathname);
         var db_handle = JSON.parse(file.file_read(pathname).toString('utf-8'));
-        console.log("update_time:",db_handle.update_time);
+        console.log("update_time:", db_handle.update_time);
         if (2000000 < (time.timestamp() - db_handle.update_time)) {
             file.file_del(pathname);
         }
     });
 
-	console.log("out if:req.cookies.name-"+req.cookies.name);
+    console.log("out if:req.cookies.name-" + req.cookies.name);
     if (typeof req.cookies.name != "undefined") {
         callback(req, res, req.cookies.name);
     }
     else {
-		console.log("req.cookies.name"+req.cookies.name);
-		fs.exists(project_root_path+"/"+global.session+"/"+req.cookies.name, function (exists) {
-            if(!exists){
-				res.clearCookie('name', { path: '/' });
-				res.redirect("login");//自动跳转到:my_profile_card
-			}
-			else if( typeof req.cookies.name == "undefined" ){
-				res.redirect("login");//自动跳转到:my_profile_card
-			}
-			else{
-				callback(req, res, req.cookies.name);
-			}
-		});
+        console.log("req.cookies.name" + req.cookies.name);
+        fs.exists(project_root_path + "/" + global.session + "/" + req.cookies.name, function (exists) {
+            if (!exists) {
+                res.clearCookie('name', {path: '/'});
+                res.redirect("login");//自动跳转到:my_profile_card
+            }
+            else if (typeof req.cookies.name == "undefined") {
+                res.redirect("login");//自动跳转到:my_profile_card
+            }
+            else {
+                callback(req, res, req.cookies.name);
+            }
+        });
     }
 };
 
 //登录，返回随机key
-Interface.prototype.login = function(username,password,Verify,callback){
+Interface.prototype.login = function (username, password, Verify, callback) {
     file.travel_dir(global.project_root_path + "/" + global.session, function (pathname) {
         //console.log(pathname);
         var db_handle = JSON.parse(file.file_read(pathname).toString('utf-8'));
@@ -83,107 +82,91 @@ Interface.prototype.login = function(username,password,Verify,callback){
             file.file_del(pathname);
         }
     });
-	if((typeof username == "undefined")&&(typeof password == "undefined")){
-		callback("yes","erro");
-	}
-	else{
-		nosql.select(project_root_path+"/"+ global.db_path+"/user.json", 
-			function(e){
-				return e.useid == username && e.u_password == password;
-			},
-			function(err, result){
-				
-				if(typeof result[0] == "undefined"){
-					callback("yes","erro");
-				} else if(err){
-					callback("yes","erro");
-				}
-				else{
-					var login_handle_id = ""+time.getMonth()+time.getDate()+time.timestamp();
-					
-					var login_handle = {"update_time":time.timestamp()};
+    if ((typeof username == "undefined") && (typeof password == "undefined")) {
+        callback("yes", "erro");
+    }
+    else {
+        nosql.select(project_root_path + "/" + global.db_path + "/user.json",
+            function (e) {
+                return e.useid == username && e.u_password == password;
+            },
+            function (err, result) {
+
+                if (typeof result[0] == "undefined") {
+                    callback("yes", "erro");
+                } else if (err) {
+                    callback("yes", "erro");
+                }
+                else {
+                    var login_handle_id = "" + time.getMonth() + time.getDate() + time.timestamp();
+
+                    var login_handle = {"update_time": time.timestamp()};
                     console.log(result);
-					login_handle.id = result[0].useid;
-					file.file_write(project_root_path+"/"+global.session+"/"+login_handle_id,JSON.stringify(login_handle));
-					callback("no",login_handle_id);
-				}
-			}
-		);
-	}
+                    login_handle.id = result[0].useid;
+                    file.file_write(project_root_path + "/" + global.session + "/" + login_handle_id, JSON.stringify(login_handle));
+                    callback("no", login_handle_id);
+                }
+            }
+        );
+    }
 };
 
 //登出，输入key
-Interface.prototype.logout = function(login_handle_id,callback){
-	var project_root_path = global.project_root_path;
-	file.file_exists(project_root_path+"/"+global.session+"/"+login_handle_id,function(exists){
-		if(exists){
-			file.file_del(project_root_path+"/"+global.session+"/"+login_handle_id);
-		}
-		else{
-			console.log("nuknow file "+project_root_path+"/"+global.session+"/"+login_handle_id);
-		}
-	});
-	
-	callback();
+Interface.prototype.logout = function (login_handle_id, callback) {
+    var project_root_path = global.project_root_path;
+    file.file_exists(project_root_path + "/" + global.session + "/" + login_handle_id, function (exists) {
+        if (exists) {
+            file.file_del(project_root_path + "/" + global.session + "/" + login_handle_id);
+        }
+        else {
+            console.log("nuknow file " + project_root_path + "/" + global.session + "/" + login_handle_id);
+        }
+    });
+
+    callback();
 };
 
 //根据key，返回用户id
-Interface.prototype.get_user_id = function (req, res, tempid, callback){
-    
-	var project_root_path = global.project_root_path;
-	var temp = file.file_read(project_root_path+"/"+global.session+"/"+ tempid);
-	var login_handle = JSON.parse(temp.toString('utf-8'));
-	
-	nosql.select(project_root_path+"/"+ global.db_path+"/user_info.json", 
-		function (e, index, self){
-			return e.useid == login_handle.id;
-		},
-		function(err, result, key_index){
-			if(typeof result == "undefined"){
-				callback("yes","erro", key_index);
-			} else if(err){
-				callback("yes","erro", key_index);
-			}
-			else{
-				callback("no",result, key_index);
-			}
-		}
-	);
+Interface.prototype.get_user_id = function (req, res, tempid, callback) {
+
+    var project_root_path = global.project_root_path;
+    var temp = file.file_read(project_root_path + "/" + global.session + "/" + tempid);
+    var login_handle = JSON.parse(temp.toString('utf-8'));
+
+    nosql.select(project_root_path + "/" + global.db_path + "/user_info.json",
+        function (e, index, self) {
+            return e.useid == login_handle.id;
+        },
+        function (err, result, key_index) {
+            if (typeof result == "undefined") {
+                callback("yes", "erro", key_index);
+            } else if (err) {
+                callback("yes", "erro", key_index);
+            }
+            else {
+                callback("no", result, key_index);
+            }
+        }
+    );
 };
 
 Interface.prototype.update_user_info = function (key, json_fmt, callback) {
     var project_root_path = global.project_root_path;
-    
+
     var temp = file.file_read(project_root_path + "/" + global.session + "/" + key);
     var login_handle = JSON.parse(temp.toString('utf-8'));
     json_fmt.useid = login_handle.id;
-    nosql.update(project_root_path + "/"+ global.db_path+"/user_info.json", 1, json_fmt, function () { });
+    nosql.update(project_root_path + "/" + global.db_path + "/user_info.json", 1, json_fmt, function () {
+    });
     return true;
 };
 
 //读取配置文件
-Interface.prototype.get_config = function (key){
+Interface.prototype.get_config = function (key) {
     ///////////////////////////////////////////////////////////////////////////////////////////
-    //读取配置文件
-    nodecpp.get_config_callback("package.json",function (config_name, config_language) {
-            global.project_name = config_name;
-            global.language = config_language;
-    });
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    //设置项目的根路径
-    switch (os.type()) {
-        case "Windows_NT":
-            global.project_root_path = nodecpp.project_path(__dirname, global.project_name, "\\", function (result) {
-                //console.log(result);
-            }) + "\\" + global.project_name;
-            break;
-        default:
-            global.project_root_path = nodecpp.project_path(__dirname, global.project_name, "/", function (result) {
-                //console.log(result);
-            }) + "/" + global.project_name;
-    }
-    ///////////////////////////////////////////////////////////////////////////////////////////
-    nodecpp.travel_dir("temp_session\\*.*" );
+    global.project_name = config("name")//config_name;
+    global.language = config("language") // config_language;
+
 };
 
 //分页
@@ -206,7 +189,7 @@ Interface.prototype.pagination = function (req, res, result, callback) {
     else {
         page_max_list = parseInt(req.query.pml);
     }
-    
+
     var page_num_mod = result.length % page_max_list;
     var page_num_max = (result.length - page_num_mod) / page_max_list;
     if (page_num_mod > 0) {
@@ -214,7 +197,7 @@ Interface.prototype.pagination = function (req, res, result, callback) {
     }
     var b = page_max_list * pn - page_max_list;
     var e = page_max_list * pn;
-    for ( ; (b < e) && (b <= result.length - 1); b++) {
+    for (; (b < e) && (b <= result.length - 1); b++) {
         out_put.push(result[b]);
     }
     callback(out_put, pn, page_num_max);
