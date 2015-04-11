@@ -10,7 +10,7 @@ var config = require("../lib/config")();
 //该处为C++模块
 ////////////////////////////////////////////////////////////////////////////////////
 global.project_name = "";
-global.project_root_path = "";
+global.project_root_path = process.cwd();
 global.language = "chinaese";
 global.session = "temp_session";
 global.db_path = "db";

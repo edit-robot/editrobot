@@ -23,7 +23,6 @@ coverage
 
 # webstorm configuration
 .idea
-
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
@@ -32,3 +31,5 @@ build/Release
 node_modules
 
 
+#runtime temp files
+temp_session

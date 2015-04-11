@@ -11,7 +11,7 @@ Interface.prototype.copy_file = function (src, dst) {
 
 //历遍目录
 Interface.prototype.travel_dir = function (dir, callback) {
-    dir = path.join(cwd, dir);
+    //dir = path.join(cwd, dir);
 
     fs.readdirSync(dir).forEach(function (file) {
         var pathname = path.join(dir, file);
@@ -56,7 +56,7 @@ Interface.prototype.file_write = function (file_name, text) {
 
 //文件读
 Interface.prototype.file_read = function (file_name) {
-    file_name = path.join(cwd, file_name);
+    //file_name = path.join(cwd, file_name);
     return fs.readFileSync(file_name);
 };
 
