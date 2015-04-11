@@ -1,0 +1,56 @@
+<% include login_header.ejs %>
+	<% include login_menu.ejs %>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading"><%= title %></div>
+			<div class="panel-body">
+				<script src="/tinymce/tinymce.min.js"></script>
+				<script type="application/x-javascript">
+					tinymce.init({
+						selector: "textarea#contents",
+						theme: "modern",
+						height: 300,
+						plugins: [
+							"advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+							"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+							"save table contextmenu directionality emoticons template paste textcolor"
+						],
+						toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons", 
+						style_formats: [
+							{title: 'Bold text', inline: 'b'},
+							{title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+							{title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+							{title: 'Example 1', inline: 'span', classes: 'example1'},
+							{title: 'Example 2', inline: 'span', classes: 'example2'},
+							{title: 'Table styles'},
+							{title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+						]
+					});
+				</script>
+                <form role="form" action="save_content?edit=<%= handle %>" method="post">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="<%= page_title %>" value="<%= page_title %>">
+                    </div>
+                    
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-info<% if(state == "sketch"){ %> active <% } %>">
+                            <input type="radio" name="state" id="option1" autocomplete="off" value="sketch"<% if(state == "sketch"){ %> checked <% } %>/> 草稿
+                        </label>
+                        <label class="btn btn-success<% if(state == "release"){ %> active <% } %>">
+                            <input type="radio" name="state" id="option2" autocomplete="off" value="release"<% if(state == "release"){ %> checked <% } %>/> 发布
+                        </label>
+                        <label class="btn btn-default<% if(state == "recycle"){ %> active <% } %>">
+                            <input type="radio" name="state" id="option3" autocomplete="off" value="recycle"<% if(state == "recycle"){ %> checked <% } %>/> 回收站
+                        </label>
+                    </div>
+                    <div class="form-group" style="margin-top: 13px;">
+                        <textarea id="contents" name="contents"><%= contents %></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-danger" style="float:right;">保存</button>
+                </form>
+			</div>
+			<div class="panel-footer">提示:......</div>
+		</div>
+	</div>
+<% include footer.ejs %>

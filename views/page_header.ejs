@@ -1,0 +1,64 @@
+<nav class="navbar navbar-inverse" role="navigation" id="page_head">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    ED
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/">
+                        <%
+                            var index = {
+                                "english":"index",
+                                "chinese":"首页"
+                            };
+                        %><%= index[language] %>
+                        </a></li>
+                    <li><a href="media_list">
+                        <%
+                            var media_list = {
+                                "english":"media list",
+                                "chinese":"文章列表"
+                            };
+                        %><%= media_list[language] %>
+                        </a></li>
+                    <li><a href="contacts_us">
+                        <%
+                            var contacts_us = {
+                                "english":"contacts us",
+                                "chinese":"联系"
+                            };
+                        %><%= contacts_us[language] %>
+                        </a></li>
+                    <li><a href="tdc">
+                        <%
+                            var tdc = {
+                                "english":"URL Two-dimensional code",
+                                "chinese":"二维码"
+                            };
+                        %><%= tdc[language] %>
+                        </a></li>
+                    <li class="divider"></li>
+                    <li><a href="login">
+                        <%
+                            var login = {
+                                "english":"login",
+                                "chinese":"登录"
+                            };
+                        %><%= login[language] %>
+                        </a></li>
+                    <li class="divider"></li>
+                    <li><a href="logout">
+                        <%
+                            var logout = {
+                                "english":"logout",
+                                "chinese":"登出"
+                            };
+                        %><%= logout[language] %>
+                        </a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,1 @@
+set DEBUG=editrobot_cpp & node .\bin\www

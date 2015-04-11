@@ -1,0 +1,93 @@
+<% include login_header.ejs %>
+	<% include login_menu.ejs %>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading"><%= title %></div>
+                    <div class="panel-body">
+
+                    </div>
+                    <!-- Table -->
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>类别</th>
+                                <th>参数</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#</td>
+                                <td>临时目录</td>
+                                <td><%= os.tmpdir %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>主机名称</td>
+                                <td><%= os.hostname %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>操作系统类型</td>
+                                <td><%= os.type %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>操作系统平台</td>
+                                <td><%= os.platform %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>CPU架构</td>
+                                <td><%= os.arch %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>操作系统的release版本号</td>
+                                <td><%= os.release %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>系统从启动到方法执行共经历多长时间</td>
+                                <td><%= os.uptime %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>内存总数，单位字节</td>
+                                <td><%= os.totalmem %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>剩余可用内存空间</td>
+                                <td><%= os.freemem %></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>#</td>
+                                <td>每个cpu核心的信息</td>
+                                <td>
+                                    <% os.cpus.forEach(function(contents){ %>
+                                    <%= contents.model %><br />
+                                    <% }) %>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<% include footer.ejs %>

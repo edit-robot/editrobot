@@ -1,0 +1,82 @@
+<% include login_header.ejs %>
+	<% include login_menu.ejs %>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading"><%= title %> &nbsp; <span class="badge" data-toggle="modal" data-target="#myModal" style="cursor:pointer;"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;新增好友</span>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" id="myModalLabel">新增好友</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" action="create_friends_contacts" method="post">
+                                    <div class="form-group">
+                                        <label for="name">称呼</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="称呼...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="link">连接地址</label>
+                                        <input type="text" class="form-control" id="link" name="link" placeholder="连接...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="remark">备注</label>
+                                        <input type="text" class="form-control" id="remark" name="remark" placeholder="备注...">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">保存</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="panel-body">
+                <table class="table table-hover">
+                    <caption style="text-align:left;">查询结果</caption>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>称呼</th>
+                            <th>链接地址</th>
+                            <th>备注</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% contents_list.forEach(function(contents){ %>
+                        <tr>
+                            <td>#</td>
+                            <td><%= contents.name %></td>
+                            <td><a href="http://<%= contents.link %>"><%= contents.link %></a> </td>
+                            <td><%= contents.remark %></td>
+                            <td>
+                                <a href="del_friends_contacts?del=<%= contents.handle %>">删除</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <nav style="text-align: center;">
+                    <ul class="pagination">
+                        <% var i = pn_now-1;if(i < 1){i=1}%>
+                        <li><a href="friends_contacts?pn=<%= i %>">&laquo;</a></li>
+                        <% var i = pn_now-2;if(i < 1){i=1}%>
+                        <% var max = pn_now+2;if( max > page_num_max ){ max = page_num_max } %>
+                        <% for(; i <= max; i++ ) {%>
+                        <li><a href="friends_contacts?pn=<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% var i = pn_now+1;if(i > page_num_max){i = page_num_max}%>
+                        <li><a href="friends_contacts?pn=<%= i %>">&raquo;</a></li>
+                    </ul>
+                    <br />当前页:<%= pn_now %>,共<%= page_num_max %>页
+                </nav>
+			</div>
+			<div class="panel-footer">提示:......</div>
+		</div>
+	</div>
+<% include footer.ejs %>

@@ -1,0 +1,14 @@
+<% include header.ejs %>
+    <script type="text/javascript">
+        <!-- 
+        // Place this in the 'head' section of your page. 
+        function delayURL(url, time) { 
+        setTimeout("top.location.href='" + url + "'", time); 
+        }
+        //-->
+        delayURL('/login','1000')
+    </script>
+    <div class="container" id="logout_form" style="color:#ffffff;">
+        登出成功！1秒后跳转回首页...
+    </div>
+<% include footer.ejs %>

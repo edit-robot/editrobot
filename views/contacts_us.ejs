@@ -1,0 +1,16 @@
+<% include header.ejs %>
+	<% include page_header.ejs %>
+	<div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">称呼:<%= contacts_us.nickname %></li>
+                    <li class="list-group-item">QQ:<%= contacts_us.qq %></li>
+                    <li class="list-group-item">地址:<%= contacts_us.address %></li>
+                    <li class="list-group-item">手机:<%= contacts_us.mobile %></li>
+                    <li class="list-group-item">电子邮箱:<%= contacts_us.email %></li>
+                </ul>
+            </div>
+        </div>
+	</div>
+<% include footer.ejs %>

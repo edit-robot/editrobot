@@ -1,0 +1,98 @@
+<% include header.ejs %>
+	<% include page_header.ejs %>
+    <div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <%
+                var media_list = {
+                    "english":"media list",
+                    "chinese":"文章列表"
+                };
+            %><%= media_list[language] %>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <caption style="text-align:left;">
+                <%
+                    var seach_result = {
+                        "english":"seach result",
+                        "chinese":"查询结果"
+                    };
+                %><%= seach_result[language] %>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            <%
+                                var title = {
+                                    "english":"Title",
+                                    "chinese":"标题"
+                                };
+                            %><%= title[language] %>
+                        </th>
+                        <th>
+                            <%
+                                var create_time = {
+                                    "english":"create time",
+                                    "chinese":"创建时间"
+                                };
+                            %><%= create_time[language] %>
+                        </th>
+                        <th>
+                            <%
+                                var update_time = {
+                                    "english":"update time",
+                                    "chinese":"更新时间"
+                                };
+                            %><%= update_time[language] %>
+                        </th>
+                        <th>
+                            <%
+                                var operating = {
+                                    "english":"Operating",
+                                    "chinese":"操作"
+                                };
+                            %><%= operating[language] %>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% var contents_list_count = 1;
+                    contents_list.forEach(function(contents){ %>
+                    <tr>
+                        <td><%= contents_list_count %></td>
+                        <td><%= contents.title %></td>
+                        <td><%= contents.create_time %></td>
+                        <td><%= contents.update_time %></td>
+                        <td><a href="media?mediahandle=<%= contents.handle %>">
+                            <%
+                                var read = {
+                                    "english":"read",
+                                    "chinese":"阅读"
+                                };
+                            %><%= read[language] %>
+                            </a></td>
+                    </tr>
+                    <% contents_list_count++; }) %>
+                </tbody>
+            </table>
+            <nav style="text-align: center;">
+                <ul class="pagination">
+                    <% var i = pn_now-1;if(i < 1){i=1}%>
+                    <li><a href="contents?pn=<%= i %>">&laquo;</a></li>
+                    <% var i = pn_now-2;if(i < 1){i=1}%>
+                    <% var max = pn_now+2;if( max > page_num_max ){ max = page_num_max } %>
+                    <% for(; i <= max; i++ ) {%>
+                    <li><a href="contents?pn=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% var i = pn_now+1;if(i > page_num_max){i = page_num_max}%>
+                    <li><a href="contents?pn=<%= i %>">&raquo;</a></li>
+                </ul>
+                <br />当前页:<%= pn_now %>,共<%= page_num_max %>页
+            </nav>
+        </div>
+        <div class="panel-footer">提示:......</div>
+    </div>
+</div>
+<% include footer.ejs %>

@@ -1,0 +1,16 @@
+<% include header.ejs %>
+	<div class="container" id="login_form" style="width:300PX;">
+		<form role="form" action="login" method="post" style="color:#ffffff;">
+			<div class="form-group">
+				<label for="account">帐号</label>
+				<input type="text" class="form-control" name="account" id="account" placeholder="请输入帐号..." value="">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" class="form-control" name="password" id="password" placeholder="请输入密码..." value="">
+			</div>
+			<button type="submit" class="btn btn-default">登录</button>
+		</form>
+	</div>
+	<%= msg %>
+<% include footer.ejs %>

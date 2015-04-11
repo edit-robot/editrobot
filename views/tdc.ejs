@@ -1,0 +1,27 @@
+<% include header.ejs %>
+<% include page_header.ejs %>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <style type="text/css">
+                    #qrcodeTable table {
+                        margin: 0 auto;
+                    }
+                </style>
+                <!--<script type="text/javascript" src="jqueryqrcode/jquery.qrcode.min.js"></script>-->
+                <script type="text/javascript" src="jqueryqrcode/jquery.qrcode.js"></script>
+                <script type="text/javascript" src="jqueryqrcode/qrcode.js"></script>
+                <div id="qrcodeTable"></div>
+                <script>
+                    jQuery('#qrcodeTable').qrcode({
+                        render: "table",
+                        text: window.location.href,
+                        width: 120, //宽度
+                        height: 120 //高度
+                    });
+                </script>
+
+            </div>
+        </div>
+    </div>
+<% include footer.ejs %>

@@ -1,0 +1,69 @@
+<% include login_header.ejs %>
+	<% include login_menu.ejs %>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading"><%= title %></div>
+			<div class="panel-body">
+                <form role="form" action="update_users_info" method="post">
+                    <div class="form-group">
+                        <label for="nickname">
+                            <%
+                                var nickname_text = {
+                                    "english":"nickname",
+                                    "chinese":"昵称"
+                                };
+                            %><%= nickname_text[language] %>
+                        </label>
+                        <input type="text" class="form-control" id="nickname" name="nickname" placeholder="<%= nickname %>" value="<%= nickname %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="qq">QQ</label>
+                        <input type="text" class="form-control" id="qq" name="qq" placeholder="<%= qq %>" value="<%= qq %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">
+                            <%
+                                var mobile_name = {
+                                    "english":"mobile",
+                                    "chinese":"手机号"
+                                };
+                            %><%= mobile_name[language] %>
+                        </label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="<%= mobile %>" value="<%= mobile %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">
+                            <%
+                                var address_name = {
+                                    "english":"Address",
+                                    "chinese":"地址"
+                                };
+                            %><%= address_name[language] %>
+                        </label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="<%= address %>" value="<%= address %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">
+                            <%
+                            var email_name = {
+                                "english":"Email",
+                                "chinese":"电子邮件"
+                            };
+                            %><%= email_name[language] %>
+                        </label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="<%= email %>" value="<%= email %>">
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        <%
+                        var save = {
+                        "english":"Save",
+                        "chinese":"保存"
+                        };
+                        %><%= save[language] %>
+                    </button>
+                </form>
+			</div>
+			<div class="panel-footer">提示:......</div>
+		</div>
+	</div>
+<% include footer.ejs %>

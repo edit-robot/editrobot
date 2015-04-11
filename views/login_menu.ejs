@@ -1,0 +1,64 @@
+<nav class="navbar navbar-default" role="navigation" id="page_head">
+	<div class="container-fluid">
+		<ul class="nav navbar-nav">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				<span class="glyphicon glyphicon-asterisk"></span>&nbsp;<%= title %>
+				<span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="my_profile_card"><span class="glyphicon glyphicon-user"></span>&nbsp;
+                        <%
+                            var my_profile_card = {
+                                "english":"my profile card",
+                                "chinese":"我的资料"
+                            };
+                        %><%= my_profile_card[language] %>
+                        </a></li>
+					<li><a href="friends_contacts"><span class="glyphicon glyphicon-envelope"></span>&nbsp;
+                        <%
+                            var friends_contacts = {
+                                "english":"friends contacts",
+                                "chinese":"通讯录"
+                            };
+                        %><%= friends_contacts[language] %>
+                        </a></li>
+					<li class="divider"></li>
+					<li><a href="contents"><span class="glyphicon glyphicon-list"></span>&nbsp;
+                        <%
+                            var contents = {
+                                "english":"contents",
+                                "chinese":"内容管理"
+                            };
+                        %><%= contents[language] %>
+                        </a></li>
+					<li><a href="create_content"><span class="glyphicon glyphicon-plus"></span>&nbsp;
+                        <%
+                            var create_content = {
+                                "english":"create content",
+                                "chinese":"创建内容"
+                            };
+                        %><%= create_content[language] %>
+                        </a></li>
+                    <li class="divider"></li>
+                    <li><a href="host"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+                        <%
+                            var system = {
+                                "english":"system",
+                                "chinese":"系统"
+                            };
+                        %><%= system[language] %>
+                        </a></li>
+					<li class="divider"></li>
+					<li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                        <%
+                            var logout = {
+                                "english":"logout",
+                                "chinese":"退出系统"
+                            };
+                        %><%= logout[language] %>
+                        </a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</nav>

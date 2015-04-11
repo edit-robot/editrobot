@@ -1,0 +1,59 @@
+<% include login_header.ejs %>
+	<% include login_menu.ejs %>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-heading"><%= title %></div>
+			<div class="panel-body">
+				<table class="table table-hover">
+					<caption style="text-align:left;">查询结果</caption>
+					<thead>
+						<tr>
+							<th>#</th>
+                            <th>作者</th>
+							<th>标题</th>
+                            <th>类型</th>
+                            <th>状态</th>
+                            <th>创建时间</th>
+                            <th>更新时间</th>
+							<th>备注</th>
+                            <th>操作</th>
+						</tr>
+					</thead>
+					<tbody>                        
+                        <% var contents_list_count = 0;contents_list.forEach(function(contents){ ++contents_list_count;%>
+                        <tr>
+                            <td><%= contents_list_count %></td>
+                            <td><%= contents.author %></td>
+                            <td><%= contents.title %></td>
+                            <td><%= contents.otname %></td>
+                            <td><%= contents.state %></td>
+                            <td><%= contents.create_time %></td>
+                            <td><%= contents.update_time %></td>
+                            <td><%= contents.remark %></td>
+                            <td>
+                                <a href="edit_content?edit=<%= contents.handle %>">编辑</a>|
+                                <a href="del_content?del=<%= contents.handle %>">删除</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+					</tbody>
+				</table>
+				<nav style="text-align: center;">
+                    <ul class="pagination">
+                        <% var i = pn_now-1;if(i < 1){i=1}%>
+                        <li><a href="contents?pn=<%= i %>">&laquo;</a></li>
+                        <% var i = pn_now-2;if(i < 1){i=1}%>
+                        <% var max = pn_now+2;if( max > page_num_max ){ max = page_num_max } %>
+                        <% for(; i <= max; i++ ) {%>
+                        <li><a href="contents?pn=<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% var i = pn_now+1;if(i > page_num_max){i = page_num_max}%>
+                        <li><a href="contents?pn=<%= i %>">&raquo;</a></li>
+                    </ul>
+                    <br />当前页:<%= pn_now %>,共<%= page_num_max %>页
+				</nav>
+			</div>
+			<div class="panel-footer">提示:......</div>
+		</div>
+	</div>
+<% include footer.ejs %>
